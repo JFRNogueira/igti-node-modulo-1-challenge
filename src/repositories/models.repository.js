@@ -7,6 +7,10 @@ async function readDB() {
   return JSON.parse(fs.readFileSync(DB_PATH, 'utf8'))
 }
 
+async function isBoolean(input) {
+  return typeof(input) == 'boolean'
+}
+
 async function saveDB(pedidos) {
   var pedidosJSON = JSON.stringify(pedidos);
   fs.writeFile(DB_PATH, pedidosJSON, 'utf8', () => {
@@ -58,7 +62,9 @@ exports.updatePedido = async function updatePedido(id, updatedDoc) {
   db.pedidos[index].cliente = updatedDoc.cliente || db.pedidos[index].cliente
   db.pedidos[index].produto = updatedDoc.produto || db.pedidos[index].produto
   db.pedidos[index].valor = updatedDoc.valor || db.pedidos[index].valor
-  db.pedidos[index].entregue = updatedDoc.entregue || db.pedidos[index].entregue
+  if ( "entregue" in updatedDoc && isBoolean(updatedDoc.entregue)) {
+    db.pedidos[index].entregue = updatedDoc.entregue
+  }
   await saveDB(db)
 }
 

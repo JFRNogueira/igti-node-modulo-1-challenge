@@ -14,5 +14,9 @@ app.patch('/delivery/updateOneOrder', (req, res) => {
   return updateOneOrder(req, res)
 })
 
+app.patch('/delivery/received', (req, res) => {
+  return updateOneOrder(req, res)
+})
+
 
 module.exports = app
