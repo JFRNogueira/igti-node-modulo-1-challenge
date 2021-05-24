@@ -2,7 +2,8 @@ const {
   getNextOrderId,
   saveNextOrderId,
   createPedido,
-  updatePedido
+  updatePedido,
+  deletePedido
 } = require('../repositories/models.repository');
 
 
@@ -55,6 +56,13 @@ exports.updateOneOrder = async function updateOneOrder(req, res) {
   await updatePedido(id, updatedOrder)
 
   res.send(updatedOrder)
+}
+
+
+exports.deleteOneOrder = async function deleteOneOrder(req, res) {
+  var id = req.body.id
+  await deletePedido(id)
+  res.send({ deletedId: id })
 }
 
 

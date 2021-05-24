@@ -68,6 +68,14 @@ exports.updatePedido = async function updatePedido(id, updatedDoc) {
   await saveDB(db)
 }
 
+exports.deletePedido = async function deletePedido(id) {
+  var db = await readDB()
+  var orders = db.pedidos
+  const index = await getOrderIndexById(orders, id)
+  orders.splice(index)
+  await saveDB(db)
+}
+
 
 
 
