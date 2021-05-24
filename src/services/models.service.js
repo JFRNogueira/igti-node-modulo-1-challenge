@@ -2,7 +2,7 @@ const {
   getNextOrderId,
   saveNextOrderId,
   createPedido,
-  updateOneOrder
+  updatePedido
 } = require('../repositories/models.repository');
 
 
@@ -52,9 +52,9 @@ exports.createOneOrder = async function createOneOrder(req, res) {
 exports.updateOneOrder = async function updateOneOrder(req, res) {
   var id = req.body.id
   const updatedOrder = req.body
-  await createPedido(order)
+  await updatePedido(id, updatedOrder)
 
-  res.send(order)
+  res.send(updatedOrder)
 }
 
 
