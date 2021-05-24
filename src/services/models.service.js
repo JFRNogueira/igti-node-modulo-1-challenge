@@ -107,56 +107,11 @@ exports.countProducts = async function countProducts(req, res) {
   const orders = await getAllPedidos()
   var totalAmount = 0
 
-  console.log(req.body)
+  var result = orders.reduce((r, order) => {
+    var product = order.produto
+    r[product] = r[product] + 1 || 1;
+    return r;
+  }, Object.create(null));
 
-  if ("cliente" in req.body) {
-    const client = req.body.cliente
-    for (let index = 0; index < orders.length; index++) {
-      if (orders[index].cliente == client) {
-        console.log('oi')
-        totalAmount += orders[index].valor
-      }
-    }
-  }
-
-  if ("produto" in req.body) {
-    const product = req.body.produto
-    for (let index = 0; index < orders.length; index++) {
-      if (orders[index].produto == product) {
-        totalAmount += orders[index].valor
-      }
-    }
-  }
-  res.send({ valorTotal: totalAmount })
-}
-
-
-
-
-
-
-
-
-
-
-
-exports.listModels = async function listModels(req, res) {
-  const brandName = await req.body.nomeMarca
-  const allBrands = await getAllBrandsNames()
-  var targetBrandName = ''
-
-  for (let index = 0; index < allBrands.length; index++) {
-    currentBrandname = allBrands[index]
-    if (brandName.toLowerCase() == currentBrandname.toLowerCase()) {
-      targetBrandName = currentBrandname
-    }
-  }
-
-  if (targetBrandName == '') {
-    res.send([])
-  }
-
-  const brandDoc = await getOneBrandDoc(targetBrandName)
-  const brandModels = brandDoc.models
-  res.send(brandModels)
+  res.send(result)
 }
