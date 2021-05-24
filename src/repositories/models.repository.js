@@ -8,7 +8,7 @@ async function readDB() {
 }
 
 async function isBoolean(input) {
-  return typeof(input) == 'boolean'
+  return typeof (input) == 'boolean'
 }
 
 async function saveDB(pedidos) {
@@ -62,7 +62,7 @@ exports.updatePedido = async function updatePedido(id, updatedDoc) {
   db.pedidos[index].cliente = updatedDoc.cliente || db.pedidos[index].cliente
   db.pedidos[index].produto = updatedDoc.produto || db.pedidos[index].produto
   db.pedidos[index].valor = updatedDoc.valor || db.pedidos[index].valor
-  if ( "entregue" in updatedDoc && isBoolean(updatedDoc.entregue)) {
+  if ("entregue" in updatedDoc && isBoolean(updatedDoc.entregue)) {
     db.pedidos[index].entregue = updatedDoc.entregue
   }
   await saveDB(db)
@@ -74,6 +74,14 @@ exports.deletePedido = async function deletePedido(id) {
   const index = await getOrderIndexById(orders, id)
   orders.splice(index)
   await saveDB(db)
+}
+
+exports.getPedido = async function getPedido(id) {
+  var db = await readDB();
+  var orders = db.pedidos;
+  const index = await getOrderIndexById(orders, id);
+  result = orders[index];
+  return result;
 }
 
 

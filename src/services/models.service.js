@@ -3,6 +3,7 @@ const {
   saveNextOrderId,
   createPedido,
   updatePedido,
+  getPedido,
   deletePedido
 } = require('../repositories/models.repository');
 
@@ -66,6 +67,11 @@ exports.deleteOneOrder = async function deleteOneOrder(req, res) {
 }
 
 
+exports.getOneOrder = async function getOneOrder(req, res) {
+  var id = req.body.id
+  const order = await getPedido(id)
+  res.send(order)
+}
 
 
 
