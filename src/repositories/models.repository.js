@@ -42,7 +42,7 @@ exports.saveNextOrderId = async function saveNextOrderId(NextOrderId) {
 }
 
 exports.getAllPedidos = async function getAllPedidos() {
-  const pedidos = readDB()
+  const pedidos = await readDB()
   return pedidos['pedidos']
 }
 

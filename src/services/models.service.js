@@ -4,6 +4,7 @@ const {
   createPedido,
   updatePedido,
   getPedido,
+  getAllPedidos,
   deletePedido
 } = require('../repositories/models.repository');
 
@@ -71,6 +72,62 @@ exports.getOneOrder = async function getOneOrder(req, res) {
   var id = req.body.id
   const order = await getPedido(id)
   res.send(order)
+}
+
+
+exports.getTotalAmount = async function getTotalAmount(req, res) {
+  const orders = await getAllPedidos()
+  var totalAmount = 0
+
+  console.log(req.body)
+
+  if ("cliente" in req.body) {
+    const client = req.body.cliente
+    for (let index = 0; index < orders.length; index++) {
+      if (orders[index].cliente == client) {
+        console.log('oi')
+        totalAmount += orders[index].valor
+      }
+    }
+  }
+
+  if ("produto" in req.body) {
+    const product = req.body.produto
+    for (let index = 0; index < orders.length; index++) {
+      if (orders[index].produto == product) {
+        totalAmount += orders[index].valor
+      }
+    }
+  }
+  res.send({ valorTotal: totalAmount })
+}
+
+
+exports.countProducts = async function countProducts(req, res) {
+  const orders = await getAllPedidos()
+  var totalAmount = 0
+
+  console.log(req.body)
+
+  if ("cliente" in req.body) {
+    const client = req.body.cliente
+    for (let index = 0; index < orders.length; index++) {
+      if (orders[index].cliente == client) {
+        console.log('oi')
+        totalAmount += orders[index].valor
+      }
+    }
+  }
+
+  if ("produto" in req.body) {
+    const product = req.body.produto
+    for (let index = 0; index < orders.length; index++) {
+      if (orders[index].produto == product) {
+        totalAmount += orders[index].valor
+      }
+    }
+  }
+  res.send({ valorTotal: totalAmount })
 }
 
 
